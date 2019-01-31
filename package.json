@@ -1,6 +1,6 @@
 {
   "name": "ya-error",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Yet another error class for Node",
   "author": "Steve Ripberger",
   "license": "MIT",
