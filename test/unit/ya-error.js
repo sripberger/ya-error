@@ -174,13 +174,13 @@ describe('YaError', function() {
 		});
 
 		it('returns true without checking for YaError if err is instance of sup', function() {
-			class BazError extends FooError {}
+			class BazError extends BarError {}
 			err = new BazError();
 			isYarErrorStub.get(() => {
 				throw new Error('Should not check err constructor isYaError');
 			});
 
-			expect(YaError.is(FooError, err)).to.be.true;
+			expect(YaError.is(BarError, err)).to.be.true;
 		});
 	});
 });
