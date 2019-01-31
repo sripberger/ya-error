@@ -111,23 +111,28 @@ describe('YaError', function() {
 			class BazError extends YaError {}
 
 			expect(YaError.nameChain).to.deep.equal([
+				'Error',
 				'YaError',
 			]);
 			expect(TestError.nameChain).to.deep.equal([
+				'Error',
 				'YaError',
 				'TestError',
 			]);
 			expect(FooError.nameChain).to.deep.equal([
+				'Error',
 				'YaError',
 				'TestError',
 				'FooError',
 			]);
 			expect(BarError.nameChain).to.deep.equal([
+				'Error',
 				'YaError',
 				'TestError',
 				'BarError',
 			]);
 			expect(BazError.nameChain).to.deep.equal([
+				'Error',
 				'YaError',
 				'BazError',
 			]);
@@ -135,24 +140,22 @@ describe('YaError', function() {
 	});
 
 	describe('::is', function() {
-		let fooNameStub, barIsYaErrorStub, barNameChainStub, err;
+		let isYarErrorStub, nameChainStub, err;
 
 		class FooError extends YaError {}
 		class BarError extends YaError {}
 
 		beforeEach(function() {
-			fooNameStub = sinon.stub(FooError, 'name')
-				.get(() => 'FooError');
-			barIsYaErrorStub = sinon.stub(BarError, 'isYaError')
+			isYarErrorStub = sinon.stub(BarError, 'isYaError')
 				.get(() => true);
-			barNameChainStub = sinon.stub(BarError, 'nameChain')
+			nameChainStub = sinon.stub(BarError, 'nameChain')
 				.get(() => [ 'YaError', 'BarError' ]);
 
 			err = new BarError();
 		});
 
 		it('returns true if sup name is in err constructor\'s name chain', function() {
-			barNameChainStub.get(() => [ 'YaError', 'FooError', 'BarError' ]);
+			nameChainStub.get(() => [ 'YaError', 'FooError', 'BarError' ]);
 
 			expect(YaError.is(FooError, err)).to.be.true;
 		});
@@ -162,28 +165,19 @@ describe('YaError', function() {
 		});
 
 		it('returns false without getting name chain if err is not a YaError', function() {
-			barIsYaErrorStub.get(() => false);
-			barNameChainStub.get(() => {
+			isYarErrorStub.get(() => false);
+			nameChainStub.get(() => {
 				throw new Error('Should not get err contructor name chain');
 			});
 
 			expect(YaError.is(FooError, err)).to.be.false;
 		});
 
-		it('returns true without checking for YaError if sup name is \'Error\'', function() {
-			fooNameStub.get(() => 'Error');
-			barIsYaErrorStub.get(() => {
-				throw new Error('Should not check err constructor isYaError');
-			});
-
-			expect(YaError.is(FooError, err)).to.be.true;
-		});
-
-		it('returns true without checking sup name if err is an instanceof sup', function() {
+		it('returns true without checking for YaError if err is instance of sup', function() {
 			class BazError extends FooError {}
 			err = new BazError();
-			fooNameStub.get(() => {
-				throw new Error('Should not get sup name');
+			isYarErrorStub.get(() => {
+				throw new Error('Should not check err constructor isYaError');
 			});
 
 			expect(YaError.is(FooError, err)).to.be.true;
