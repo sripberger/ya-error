@@ -165,7 +165,6 @@ describe('YaError', function() {
 			// Deliberately mask error classes in this block to test
 			// fallback when instanceof fails.
 			/* eslint-disable no-shadow */
-			class Error {}
 			class YaError {}
 			class FooError {}
 			class BarError {}
@@ -173,36 +172,30 @@ describe('YaError', function() {
 			/* eslint-enable no-shadow */
 
 			// Check a plain old Error
-			// TODO: Make this first case work....
-			// expect(is(Error, err)).to.be.true;
 			expect(is(YaError, err)).to.be.false;
 			expect(is(FooError, err)).to.be.false;
 			expect(is(BarError, err)).to.be.false;
 			expect(is(BazError, err)).to.be.false;
 
 			// Check a YaError
-			expect(is(Error, yaErr)).to.be.true;
 			expect(is(YaError, yaErr)).to.be.true;
 			expect(is(FooError, yaErr)).to.be.false;
 			expect(is(BarError, yaErr)).to.be.false;
 			expect(is(BazError, yaErr)).to.be.false;
 
 			// Check a FooError
-			expect(is(Error, fooErr)).to.be.true;
 			expect(is(YaError, fooErr)).to.be.true;
 			expect(is(FooError, fooErr)).to.be.true;
 			expect(is(BarError, fooErr)).to.be.false;
 			expect(is(BazError, fooErr)).to.be.false;
 
 			// Check a BarError
-			expect(is(Error, barErr)).to.be.true;
 			expect(is(YaError, barErr)).to.be.true;
 			expect(is(FooError, barErr)).to.be.false;
 			expect(is(BarError, barErr)).to.be.true;
 			expect(is(BazError, barErr)).to.be.false;
 
 			// Check a BazError
-			expect(is(Error, bazErr)).to.be.true;
 			expect(is(YaError, bazErr)).to.be.true;
 			expect(is(FooError, bazErr)).to.be.true;
 			expect(is(BarError, bazErr)).to.be.false;
