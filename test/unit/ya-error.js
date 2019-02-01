@@ -111,28 +111,23 @@ describe('YaError', function() {
 			class BazError extends YaError {}
 
 			expect(YaError.nameChain).to.deep.equal([
-				'Error',
 				'YaError',
 			]);
 			expect(TestError.nameChain).to.deep.equal([
-				'Error',
 				'YaError',
 				'TestError',
 			]);
 			expect(FooError.nameChain).to.deep.equal([
-				'Error',
 				'YaError',
 				'TestError',
 				'FooError',
 			]);
 			expect(BarError.nameChain).to.deep.equal([
-				'Error',
 				'YaError',
 				'TestError',
 				'BarError',
 			]);
 			expect(BazError.nameChain).to.deep.equal([
-				'Error',
 				'YaError',
 				'BazError',
 			]);
