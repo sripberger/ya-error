@@ -174,7 +174,7 @@ describe('YaError', function() {
 
 			// Check a plain old Error
 			// TODO: Make this first case work....
-			// expect(is(Error, err)).to.be.false;
+			// expect(is(Error, err)).to.be.true;
 			expect(is(YaError, err)).to.be.false;
 			expect(is(FooError, err)).to.be.false;
 			expect(is(BarError, err)).to.be.false;
